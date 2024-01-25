@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AR QR Code Project</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.0/aframe/build/aframe-ar.js"></script>
+</head>
+<body style="margin : 0px; overflow: hidden;">
+
+    <!-- AR Scene -->
+    <a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false;'>
+
+        <!-- Marker with Hiro preset -->
+        <!-- <a-marker preset="hiro"> -->
+        <!-- <a-marker type='pattern' url='pattern-p2.patt'> -->
+        <a-marker type='pattern' url='pattern-ram.patt'>
+
+            <!-- Text entity to show when the marker is detected -->
+            <a-text value="" color="green" position="0 0.5 0" scale="1 1 1" visible="false"></a-text>
+
+            <!-- 3D Model -->
+            <a-entity 
+                gltf-model="./RamMandir.glb" 
+                scale="0.01 0.01 0.01" 
+                position="0 0 0"
+                rotation="0 0 0"
+                visible="false">
+            </a-entity>
+
+        </a-marker>
+
+        <!-- Camera -->
+        <a-entity camera></a-entity>
+
+    </a-scene>
+
+    <script>
+        // Event listener to change visibility when marker is found
+        document.querySelector('a-marker').addEventListener('markerFound', function () {
+            var text = document.querySelector('a-text');
+            var model = document.querySelector('a-entity[gltf-model]');
+            
+            text.setAttribute('visible', true); // Show the text
+            model.setAttribute('visible', true); // Show the model
+        });
+
+        // Event listener to change visibility when marker is lost
+        document.querySelector('a-marker').addEventListener('markerLost', function () {
+            var text = document.querySelector('a-text');
+            var model = document.querySelector('a-entity[gltf-model]');
+            
+            text.setAttribute('visible', false); // Hide the text
+            model.setAttribute('visible', false); // Hide the model
+        });
+    </script>
+
+</body>
+</html>
